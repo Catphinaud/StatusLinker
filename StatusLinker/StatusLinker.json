@@ -1,0 +1,15 @@
+{
+    "Author": "Catphinaud",
+    "Name": "StatusLinker",
+    "Punchline": "Link any status",
+    "Description": "Allows to link any <status> from the game excel sheet",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "status",
+        "utility"
+    ],
+    "IconUrl": "https://raw.githubusercontent.com/Catphinaud/StatusLinker/main/images/icon.png",
+    "InternalName": "StatusLinker",
+    "RepoUrl": "https://github.com/Catphinaud/StatusLinker",
+    "DalamudApiLevel": 13
+}
