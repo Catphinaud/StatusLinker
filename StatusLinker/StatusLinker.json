@@ -1,8 +1,8 @@
 {
     "Author": "Catphinaud",
     "Name": "StatusLinker",
-    "Punchline": "Link any status",
-    "Description": "Allows to link any <status> from the game excel sheet",
+    "Punchline": "Link any status from the game",
+    "Description": "Allows to link any <status> from the game",
     "ApplicableVersion": "any",
     "Tags": [
         "status",

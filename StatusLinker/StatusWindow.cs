@@ -106,7 +106,7 @@ public class StatusWindow : Window
             ImGui.InputText("##rename_group", ref _renameGroupBuffer, 64);
             ImGui.SameLine();
             // if (ImGui.Button("Save##rename_group_btn")) {
-            if (ImGuiComponents.IconButton(FontAwesomeIcon.Save, new Vector2(ImGui.GetFrameHeight(), ImGui.GetFrameHeight()))) {
+            if (ImGuiComponents.IconButton(FontAwesomeIcon.Save)) {
                 var newName = _renameGroupBuffer.Trim();
                 if (newName.Length > 0 &&
                     !Configuration.FavoriteGroups.Any(g => g != SelectedFavoriteGroup && g.Name.Equals(newName, StringComparison.OrdinalIgnoreCase))) {
@@ -123,7 +123,7 @@ public class StatusWindow : Window
                 ImGui.BeginDisabled();
             }
 
-            if (ImGuiComponents.IconButton(FontAwesomeIcon.Trash, new Vector2(ImGui.GetFrameHeight(), ImGui.GetFrameHeight())) && !flag) {
+            if (ImGuiComponents.IconButton(FontAwesomeIcon.Trash) && !flag) {
                 Configuration.FavoriteGroups.Remove(SelectedFavoriteGroup!);
                 SelectedFavoriteGroup = Configuration.FavoriteGroups.FirstOrDefault();
                 _renameGroupBuffer = SelectedFavoriteGroup?.Name ?? string.Empty;
@@ -163,19 +163,31 @@ public class StatusWindow : Window
                         ImGui.PushID("fav_" + id);
 
                         if (ImGui.GetIO().KeyCtrl &&
-                            ImGuiComponents.IconButton(FontAwesomeIcon.Trash, new Vector2(ImGui.GetFrameHeight(), ImGui.GetFrameHeight()))) {
+                            ImGuiComponents.IconButton(FontAwesomeIcon.Trash)) {
                             SelectedFavoriteGroup.StatusIds.Remove(id);
                             Configuration.Save();
                         }
 
-                        if (!ImGui.GetIO().KeyCtrl &&
-                            ImGuiComponents.IconButton(FontAwesomeIcon.Paw, new Vector2(ImGui.GetFrameHeight(), ImGui.GetFrameHeight()))) {
-                            _lastSelectedStatusId = id;
-                            SelectedStatusId = id;
-                            AgentChatLog.Instance()->ContextStatusId = id;
+                        if (!ImGui.GetIO().KeyCtrl) {
+                            var last = _lastSelectedStatusId;
+                            if (last == status.RowId) {
+                                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.26f, 0.59f, 0.98f, 0.40f));
+                                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.26f, 0.59f, 0.98f, 0.60f));
+                            }
+
+                            if (
+                                ImGuiComponents.IconButton(FontAwesomeIcon.Paw)) {
+                                _lastSelectedStatusId = id;
+                                SelectedStatusId = id;
+                                AgentChatLog.Instance()->ContextStatusId = id;
+                            }
+
+                            if (last == status.RowId) {
+                                ImGui.PopStyleColor(2);
+                            }
                         }
 
-                        // if (ImGuiComponents.IconButton(FontAwesomeIcon.Trash, new Vector2(ImGui.GetFrameHeight(), ImGui.GetFrameHeight()))) {
+                        // if (ImGuiComponents.IconButton(FontAwesomeIcon.Trash)) {
                         //     SelectedFavoriteGroup.StatusIds.Remove(id);
                         //     Configuration.Save();
                         // }
